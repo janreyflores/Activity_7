@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CSS Cursor property in jQuery</title>
+
+  <!-- jQuery CDN -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+
+  <style>
+    body{
+      font-family:"Times New Roman", serif;
+      background:#ffffff;
+      padding:18px 22px;
+      color:#000;
+    }
+
+    h2{
+      margin:0 0 8px 0;
+      font-size:22px;
+      font-weight:bold;
+    }
+
+    .instructions{
+      margin:0 0 14px 0;
+      font-size:16px;
+      line-height:1.35;
+    }
+
+    .wrap{
+      display:flex;
+      gap:22px;
+      flex-wrap:wrap;
+      align-items:flex-start;
+    }
+
+    .card{
+      width:300px;
+    }
+
+   .photo{
+  width:300px;
+  height:300px;
+
+  object-fit:cover;          /* crops image */
+  object-position: center 15%;
+  display:block;
+  border:1px solid #bdbdbd;
+  background:#f2f2f2;
+}
+    .count{
+      margin-top:6px;
+      font-size:16px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h2>CSS cursor property in jQuery</h2>
+
+  <div class="wrap">
+    <div class="card">
+      <!-- Put janrey.jpg in the same folder as this HTML file -->
+      <img src="janrey.jpg" id="pic" class="photo" alt="Profile Picture" />
+      <div class="count">Clicked: <span id="clickedCount">0</span></div>
+    </div>
+  </div>
+
+  <script>
+    $(document).ready(function () {
+      let clicks = 0;
+
+      function updateHoverCursor() {
+        // if clicks is 5 -> wait cursor on hover, otherwise crosshair
+        $("#pic").css("cursor", (clicks === 5) ? "wait" : "crosshair");
+      }
+
+      // Hover behavior (cursor changes only when hovering the image)
+      $("#pic").on("mouseenter", function () {
+        updateHoverCursor();
+      });
+
+      $("#pic").on("mouseleave", function () {
+        $(this).css("cursor", "auto");
+      });
+
+      // Click counting + reset rule
+      $("#pic").on("click", function () {
+        if (clicks === 5) {
+          // clicked again after reaching 5 -> back to 1
+          clicks = 1;
+        } else {
+          clicks++;
+        }
+
+        $("#clickedCount").text(clicks);
+
+        // if still hovering, reflect cursor immediately
+        updateHoverCursor();
+      });
+    });
+  </script>
+
+</body>
+</html>
